@@ -6,16 +6,26 @@ import repository.AlunoRepository;
 public class AlunoService {
     private AlunoRepository repository = new AlunoRepository();
 
-    public String classificar(Aluno aluno) {
-        String resultado = aluno.nota >= 7 ? "Aprovado" : "Reprovado";
+    public void cadastrar(Aluno aluno) {
         repository.salvar(aluno);
-        return resultado;
     }
 
-    public void mostrarTodosAlunos() {
-        System.out.println("\n=== Alunos cadastrados ===");
-        for (Aluno a : repository.listarTodos()) {
-            System.out.println(a.nome + " - Nota: " + a.nota);
+    public void listar() {
+        for (Aluno a : repository.listar()) {
+            a.exibirInformacoes();
+            System.out.println("-------------------");
         }
+    }
+
+    public Aluno buscar(String cpf) {
+        return repository.buscarPorCpf(cpf);
+    }
+
+    public boolean atualizar(String cpf, Aluno alunoAtualizado) {
+        return repository.atualizar(cpf, alunoAtualizado);
+    }
+
+    public boolean remover(String cpf) {
+        return repository.remover(cpf);
     }
 }
